@@ -2,7 +2,6 @@ namespace semiOne;
 
 public struct TimeManager
 {
-    //TODO: change milliseconds from double to long
     private double _startTime;
     private double _endTime;
 
