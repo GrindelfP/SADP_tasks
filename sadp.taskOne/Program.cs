@@ -1,4 +1,4 @@
-﻿namespace semiOne;
+﻿namespace sadp.taskOne;
 
 public static class Program
 {
@@ -23,9 +23,9 @@ public static class Program
         var streamWriter = new StreamWriter("results.txt", false);
         foreach (var result in results)
         {
-            streamWriter.WriteLine($"{result[0].time},{result[0].arraySize},first\n");
-            streamWriter.WriteLine($"{result[1].time},{result[1].arraySize},last\n");
-            streamWriter.WriteLine($"{result[2].time},{result[2].arraySize},middle\n");
+            streamWriter.WriteLine($"{result[0].Time},{result[0].ArraySize},first\n");
+            streamWriter.WriteLine($"{result[1].Time},{result[1].ArraySize},last\n");
+            streamWriter.WriteLine($"{result[2].Time},{result[2].ArraySize},middle\n");
         }
         streamWriter.Close();
     }

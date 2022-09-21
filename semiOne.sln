@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "semiOne", "semiOne\semiOne.csproj", "{3CF00E48-F97D-4CF0-A168-865653E4B073}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sadp.taskOne", "sadp.taskOne\sadp.taskOne.csproj", "{3CF00E48-F97D-4CF0-A168-865653E4B073}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,4 +1,4 @@
-namespace semiOne;
+namespace sadp.taskOne;
 
 public struct TimeManager
 {
