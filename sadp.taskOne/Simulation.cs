@@ -9,6 +9,7 @@ public class Simulation
     {
         var array = new CoordinateData[_arraySize];
         var count = 0;
+        var random = new Random();
         
         var timeManager = new TimeManager();
         timeManager.SetStartTime();
@@ -20,7 +21,7 @@ public class Simulation
             {
                 1 => 0,
                 2 => count,
-                _ => new Random().Next(0, count)
+                _ => random.Next(0, count)
             };
 
             for (var j = count; j > insertionIndex; j--)

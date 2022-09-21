@@ -7,7 +7,7 @@ public struct Results
 
     public Results(double time, int arraySize)
     {
-        Time = time;
-        ArraySize = arraySize;
+        this.Time = time;
+        this.ArraySize = arraySize;
     }
 }

@@ -20,12 +20,12 @@ public static class Program
             }
         }
 
-        var streamWriter = new StreamWriter("results.txt", false);
+        var streamWriter = new StreamWriter("results.txt", true);
         foreach (var result in results)
         {
-            streamWriter.WriteLine($"{result[0].Time},{result[0].ArraySize},first\n");
-            streamWriter.WriteLine($"{result[1].Time},{result[1].ArraySize},last\n");
-            streamWriter.WriteLine($"{result[2].Time},{result[2].ArraySize},middle\n");
+            streamWriter.WriteLine($"{result[0].Time},{result[0].ArraySize},first");
+            streamWriter.WriteLine($"{result[1].Time},{result[1].ArraySize},last");
+            streamWriter.WriteLine($"{result[2].Time},{result[2].ArraySize},middle");
         }
         streamWriter.Close();
     }
