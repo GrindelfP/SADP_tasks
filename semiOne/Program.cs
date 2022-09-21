@@ -15,18 +15,17 @@ public static class Program
             var arraySize = (sizeFactor + 1) * 10000;
             for (var algorithmType = 1; algorithmType <= 3; algorithmType++)
             {
-                var simulationTypeOne = new Simulation(arraySize, algorithmType);
-                results[sizeFactor].Add(new Results(simulationTypeOne.ProcessSimulation(), arraySize));
+                var simulation = new Simulation(arraySize, algorithmType);
+                results[sizeFactor].Add(new Results(simulation.ProcessSimulation(), arraySize));
             }
         }
 
         var streamWriter = new StreamWriter("results.txt", false);
         foreach (var result in results)
         {
-            streamWriter.Write($"{result[0].time}, {result[0].arraySize}, first\n");
-            streamWriter.Write($"{result[1].time}, {result[1].arraySize}, last\n");
-            streamWriter.Write($"{result[2].time}, {result[2].arraySize}, middle\n");
-            streamWriter.Write("\n");
+            streamWriter.WriteLine($"{result[0].time},{result[0].arraySize},first\n");
+            streamWriter.WriteLine($"{result[1].time},{result[1].arraySize},last\n");
+            streamWriter.WriteLine($"{result[2].time},{result[2].arraySize},middle\n");
         }
         streamWriter.Close();
     }
