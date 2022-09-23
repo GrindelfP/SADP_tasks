@@ -2,19 +2,30 @@ namespace sadp.taskTwo;
 
 public class Stack<T>
 {
-    private readonly T[] _stack;
-    private readonly int _stackSize;
-    private int _numberOfElements;
+    public Stack(int size)
+    {
+        _size = size;
+        _stack = new T[size];
+    }
+    public Stack()
+    {
+        _size = 0;
+        _stack = new T[_size];
+    }
     
-    public int StackSize => _stackSize;
-    public int NumberOfElements => _numberOfElements;
+    private readonly T[] _stack;
+    private readonly int _size;
+    private int _maxIndex;
+    
+    public int Size { get; private set; }
+    public int MaxIndex => _maxIndex;
     
     public bool Push(T element)
     {
         try
         {
-            _numberOfElements++;
-            _stack[_numberOfElements] = element;
+            _maxIndex++;
+            _stack[_maxIndex] = element;
             return true;
         }
         catch
@@ -25,20 +36,26 @@ public class Stack<T>
 
     public T Pop()
     {
-        var excludedElement = _stack[_numberOfElements];
-        _stack[_numberOfElements] = default!;
-        _numberOfElements--;
+        _maxIndex--;
+        var excludedElement = _stack[_maxIndex];
+        _stack[_maxIndex] = default!;
         return excludedElement;
     }
 
     public bool IsEmpty()
     {
-        return _numberOfElements != 0;
+        return _maxIndex != 0;
     }
-    
-    public Stack(int stackSize)
+
+    public void SetStackSize(int value)
     {
-        _stackSize = stackSize;
-        _stack = new T[stackSize];
+        if (value >= _size)
+        {
+            Size = value;
+        }
+        else
+        {
+            throw new Exception("Cannot make stack smaller than its containment!");
+        }
     }
 }
