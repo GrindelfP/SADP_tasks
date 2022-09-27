@@ -76,6 +76,15 @@ public class Stack<T>
         }
     }
 
+    public void ForEach(ForEachFunction<T> function)
+    // completes lambda-expression for each not-null element of stack
+    {
+        for (var i = 0; i < _maxIndex; i++)
+        {
+            function(_stack[i]);
+        }
+    }
+    
     public void ConsolePrint()
     // prints elements of stack split by ',' in console
     {
@@ -113,4 +122,4 @@ public class Stack<T>
     
 }
 
-public delegate T ForEachFunction<T> (T parameter);
+public delegate void ForEachFunction<in T> (T parameter);
