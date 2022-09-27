@@ -91,18 +91,20 @@ public class Stack<T>
         }
     }
 
-    public Stack<T> Map(MapFunction<T> forEachFunction)
+    public Stack<T> Map(MapFunction<T> mapFunction) 
+    // returns new stack of the same size containing result of some given in parameter function on elements of initial stack  
     {
         var updatedStack = new Stack<T>(_size);
         ForEach(element =>
         {
-            updatedStack.Push(forEachFunction(element));
+            updatedStack.Push(mapFunction(element));
         });
         
         return updatedStack;
     }
 
-    public Stack<T> Filter(FilterFunction<T> condition)
+    public Stack<T> Filter(Condition<T> condition)
+    // returns new stack of the same size containing elements of initial stack fitting the condition given in parameter 
     {
         var filteredStack = new Stack<T>(_size);
         ForEach(element =>
@@ -139,4 +141,4 @@ public delegate void ForEachFunction<in T> (T parameter);
 
 public delegate T MapFunction<T>(T parameter);
 
-public delegate bool FilterFunction<in T>(T parameter);
+public delegate bool Condition<in T>(T parameter);
