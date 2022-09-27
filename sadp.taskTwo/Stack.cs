@@ -4,12 +4,15 @@ public class Stack<T>
 {
     // fields
     private readonly T[] _stack;
-    private readonly int _size;
+    private int _size;
     private int _maxIndex;
     
     // properties
-    public int Size { get; private set; }
-    public int MaxIndex => _maxIndex;
+    public int Size
+    {
+        get => _size;
+        set => _size = value;
+    }
     
     // constructors
     public Stack(int size)
@@ -17,13 +20,15 @@ public class Stack<T>
     {
         _size = size;
         _stack = new T[size];
+        _maxIndex = -1;
     }
 
     public Stack(T[] stack)
     // constructor with parameter of stack containment as a array of type T
     {
-        _stack = stack;
         _size = stack.Length;
+        _stack = stack;
+        _maxIndex = _size - 1;
     }
 
     public Stack()
@@ -31,6 +36,7 @@ public class Stack<T>
     {
         _size = 0;
         _stack = new T[_size];
+        _maxIndex = -1;
     }
     
     // main methods
@@ -76,42 +82,49 @@ public class Stack<T>
         }
     }
 
-    public void ForEach(ForEachFunction<T> function)
+    public void ForEach(ForEachFunction<T> forEachFunction)
     // completes lambda-expression for each not-null element of stack
     {
-        for (var i = 0; i < _maxIndex; i++)
+        for (var i = 0; i < _size; i++)
         {
-            function(_stack[i]);
+            if (_stack[i] is not null) forEachFunction(_stack[i]);
         }
     }
-    
-    public void ConsolePrint()
-    // prints elements of stack split by ',' in console
+
+    public Stack<T> Map(MapFunction<T> forEachFunction)
     {
-        foreach (var element in _stack)
+        var updatedStack = new Stack<T>(_size);
+        ForEach(element =>
         {
-            Console.Write(element + ", ");
-        }
+            updatedStack.Push(forEachFunction(element));
+        });
+        
+        return updatedStack;
+    }
+
+    public Stack<T> Filter(FilterFunction<T> condition)
+    {
+        var filteredStack = new Stack<T>(_size);
+        ForEach(element =>
+        {
+            if (condition(element)) filteredStack.Push(element);
+        });
+        
+        return filteredStack;
     }
 
     public override string ToString()
     // overrides ToString method for stack
     {
-        var strOfElements = _stack.Aggregate("[", (current, element) => current + (element + ", "));
-        strOfElements += "]";
+        var strOfElements = "[";
+        for (var i = 0; i < _size - 1; i++)
+        {
+            if (_stack[i] is not null) strOfElements += _stack[i] + ", ";
+            else strOfElements += "null, ";
+        }
+        strOfElements += _stack[_size - 1] is not null ? _stack[_size - 1] + "]" : "null]";
         
         return strOfElements;
-    }
-
-    public bool Equals(object[] array)
-    // returns true if stack's elements equal to given array's elements, false - if not, false if stack is empty
-    {
-        if (_maxIndex == 0) return false;
-        for (var i = 0; i < _size; i++)
-        {
-            if (!_stack[i]!.Equals(array[i])) return false;
-        }
-        return true;
     }
 
     public override int GetHashCode()
@@ -123,3 +136,7 @@ public class Stack<T>
 }
 
 public delegate void ForEachFunction<in T> (T parameter);
+
+public delegate T MapFunction<T>(T parameter);
+
+public delegate bool FilterFunction<in T>(T parameter);
