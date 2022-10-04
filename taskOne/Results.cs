@@ -1,4 +1,4 @@
-namespace sadp.taskOne;
+namespace taskOne;
 
 public struct Results
 {

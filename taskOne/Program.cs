@@ -1,4 +1,4 @@
-﻿namespace sadp.taskOne;
+﻿namespace taskOne;
 
 public static class Program
 {
