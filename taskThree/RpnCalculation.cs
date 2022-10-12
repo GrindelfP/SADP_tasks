@@ -4,24 +4,25 @@ namespace taskThree;
 
 public class RpnCalculation
 {
-    private readonly string _rpnExpression;
+    private Expression InputExpression { get; }
+    public string RpnExpression { get; }
 
-    public string RpnExpression => _rpnExpression;
-
-    public RpnCalculation(string inputLine)
+    public RpnCalculation(string? inputExpression)
     {
-        if (inputLine is null) throw new Exception("Expression was not entered!");
-        _rpnExpression = TranslateToRpn(inputLine);
+        InputExpression = new Expression(inputExpression);
+        if (InputExpression.Text == null) throw new Exception("Your input is invalid or empty!");
+        RpnExpression = TranslateToRpn();
     }
 
-    public string TranslateToRpn(string inputLine)
+    private string TranslateToRpn()
     {
         var rpnExpression = "";
+        var inputLine = InputExpression.Text!;
         var inputLength = inputLine.Length;
         var stack = new NewStack<char>(inputLength);
         for (var i = 0; i < inputLength; i++)
         {
-            Console.Write($"{i}) Stack of operators now is: {stack} ");
+            Console.Write($"{i + 1}) Stack of operators now is: {stack} ");
             Console.WriteLine($"'{inputLine[i]}' checking...\n");
             switch (inputLine[i])
             {
@@ -43,15 +44,15 @@ public class RpnCalculation
                 }
             }
 
-            if (!OperatorsUtil.IsOperator(inputLine[i]))
+            if (!Operators.IsOperator(inputLine[i]))
             {
                 rpnExpression += inputLine[i];
             }
             else // here we come only if the symbol is an operator (not an operand or brackets)
             {
                 var currentOperator = new Operator(inputLine[i],
-                    OperatorsUtil.GetOperatorPriority(inputLine[i]),
-                    OperatorsUtil.GetOperation(inputLine[i]));
+                    Operators.GetOperatorPriority(inputLine[i]),
+                    Operators.GetOperation(inputLine[i]));
                 while (true)
                 {
                     if (stack.IsEmpty())
@@ -59,23 +60,19 @@ public class RpnCalculation
                         stack.Push(currentOperator.Symbol);
                         break;
                     }
-                    else
+                    if (!currentOperator.HasHigherPriorityThan(stack.Top()))
                     {
-                        if (!currentOperator.HasHigherPriorityThan(stack.Top()))
-                        {
-                            rpnExpression += stack.Pop();
-                            continue;
-                        }
-                        if (currentOperator.HasHigherPriorityThan(stack.Top()))
-                        {
-                            stack.Push(currentOperator.Symbol);
-                            break;
-                        }
+                        rpnExpression += stack.Pop();
+                        continue;
+                    }
+                    if (currentOperator.HasHigherPriorityThan(stack.Top()))
+                    {
+                        stack.Push(currentOperator.Symbol);
+                        break;
                     }
                 }
             }
         }
-
 
         while (!stack.IsEmpty())
         {
@@ -85,44 +82,29 @@ public class RpnCalculation
         return rpnExpression;
     }
 
-    public double Calculator(string rpnExpression)
+    public double Calculator()
     {
-        var expressionLength = rpnExpression.Length;
+        var expressionLength = RpnExpression.Length;
         var stack = new NewStack<double>(expressionLength);
         for (var i = 0; i < expressionLength; i++)
         {
-            if (!OperatorsUtil.IsOperator(rpnExpression[i]))
+            Console.Write($"{i + 1}) Stack of operands now is: {stack} ");
+            Console.WriteLine($"'{RpnExpression[i]}' checking...\n");
+            if (!Operators.IsOperator(RpnExpression[i]))
             {
-                var operand = ConvertCharToDouble(rpnExpression[i]);
+                var operand = Convert.ToInt32(RpnExpression[i].ToString()); //ConvertCharToDouble(RpnExpression[i]);
                 stack.Push(operand);
             }
             else
             {
+                Console.WriteLine($"Completing {RpnExpression[i]}...\n");
                 var secondOperand = stack.Pop();
                 var firstOperand = stack.Pop();
-                var operation = OperatorsUtil.GetOperation(rpnExpression[i]);
+                var operation = Operators.GetOperation(RpnExpression[i]);
                 stack.Push(operation!(firstOperand, secondOperand));
             }
         }
         
         return stack.Pop();
     }
-
-    private static double ConvertCharToDouble(char @char)
-    {
-        return @char switch
-        {
-            '0' => 0.0,
-            '1' => 1.0,
-            '2' => 2.0,
-            '3' => 3.0,
-            '4' => 4.0,
-            '5' => 5.0,
-            '6' => 6.0,
-            '7' => 7.0,
-            '8' => 8.0,
-            _ => 9.0
-        };
-    }
-    
 }

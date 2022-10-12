@@ -79,7 +79,7 @@ public class NewStack<T>
     }
 
     public void ForEach(ForEachFunction<T> forEachFunction)
-        // completes lambda-expression for each not-null element of stack
+        // completes lambda-expression for each element of stack
     {
         for (var i = 0; i < Size; i++)
         {

@@ -1,6 +1,6 @@
 namespace taskThree;
 
-public static class OperatorsUtil
+public static class Operators
 {
     private static readonly Operator[] AvailableOperators =
     {
@@ -14,17 +14,12 @@ public static class OperatorsUtil
             if (b == 0) throw new Exception("Division by zero!");
             return a / b;
         }),
-        new('^', 4, (a, b) => Math.Pow(a, b)),
+        new('^', 4, Math.Pow)
     };
 
     public static bool IsOperator(char symbol)
     {
         return AvailableOperators.Any(@operator => symbol == @operator.Symbol);
-    }
-
-    public static bool IsLesserOrEqualPriority(char symbol1, char symbol2)
-    {
-        return GetOperatorPriority(symbol1) <= GetOperatorPriority(symbol2);
     }
 
     public static byte GetOperatorPriority(char symbol)
