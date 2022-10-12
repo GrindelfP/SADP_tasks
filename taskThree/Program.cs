@@ -4,7 +4,6 @@ public static class Program
 {
     private static void Main()
     {
-        Console.WriteLine(Convert.ToInt32("3"));
         Console.Write("Expression: ");
         var userInput = Console.ReadLine();
         
