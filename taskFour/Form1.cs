@@ -12,9 +12,25 @@ namespace taskFour
 {
     public partial class Form1 : Form
     {
+
+        LinkedList linkedList = new LinkedList();
+        Movie movie;
+
         public Form1()
         {
             InitializeComponent();
+        }
+
+        private void movieName_Click(object sender, EventArgs e)
+        {
+            movieName.Text = "";
+        }
+
+        private void CreateMovie_Click(object sender, EventArgs e)
+        {
+            movie = new Movie(movieName.Text, 
+                (int)movieDuration.Value, 
+                (string)movieHasOscars.SelectedItem == "ДА");
         }
     }
 }
