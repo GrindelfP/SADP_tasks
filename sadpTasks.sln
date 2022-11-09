@@ -1,10 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "taskOne", "taskOne\taskOne.csproj", "{3CF00E48-F97D-4CF0-A168-865653E4B073}"
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32210.238
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "taskOne", "taskOne\taskOne.csproj", "{3CF00E48-F97D-4CF0-A168-865653E4B073}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "taskTwo", "taskTwo\taskTwo.csproj", "{7D38E310-B5F9-4776-9587-79601F46E35E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "taskTwo", "taskTwo\taskTwo.csproj", "{7D38E310-B5F9-4776-9587-79601F46E35E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "taskThree", "taskThree\taskThree.csproj", "{99FF3E94-1EAD-4048-8414-5774BBF217E4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "taskThree", "taskThree\taskThree.csproj", "{99FF3E94-1EAD-4048-8414-5774BBF217E4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "taskFour", "taskFour\taskFour.csproj", "{D4961716-E77E-4023-B6AE-69D442343953}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,5 +29,15 @@ Global
 		{99FF3E94-1EAD-4048-8414-5774BBF217E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{99FF3E94-1EAD-4048-8414-5774BBF217E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{99FF3E94-1EAD-4048-8414-5774BBF217E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4961716-E77E-4023-B6AE-69D442343953}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4961716-E77E-4023-B6AE-69D442343953}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4961716-E77E-4023-B6AE-69D442343953}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4961716-E77E-4023-B6AE-69D442343953}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B365B4FD-CEB0-4CC7-9032-5D15A86ABD4A}
 	EndGlobalSection
 EndGlobal
