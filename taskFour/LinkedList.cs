@@ -14,8 +14,12 @@ namespace taskFour
 
         public void Add(Movie data)
         {
-            if (_startingElement == null) AddToBeggining(data);
             var newElement = new Element<Movie>(data);
+            if (_startingElement == null)
+            {
+                _startingElement = newElement;
+                return;
+            }
             var currentPointer = _startingElement;
             while (currentPointer.Next != null) currentPointer = currentPointer.Next;
             currentPointer.Next = newElement;
@@ -25,14 +29,12 @@ namespace taskFour
         {
             if (_startingElement == null)
             {
-                var link = new Element<Movie>(data);
-                _startingElement = link;
+                var newElement = new Element<Movie>(data);
+                _startingElement = newElement;
+                return;
             }
-            else
-            {
-                var link = new Element<Movie>(data, _startingElement);
-                _startingElement = link;
-            }
+            var newElementWithNext = new Element<Movie>(data, _startingElement);
+            _startingElement = newElementWithNext;
         }
 
         public void AddToSorted(Movie data)
@@ -44,9 +46,10 @@ namespace taskFour
             }
             var newElement = new Element<Movie>(data);
             var currentPointer = _startingElement;
+
             while (currentPointer.Next != null)
             {
-                if (newElement.Data.Duration < currentPointer.Data.Duration)
+                if (currentPointer.Data.Duration < newElement.Data.Duration)
                 {
                     currentPointer = currentPointer.Next;
                     continue;
@@ -54,15 +57,16 @@ namespace taskFour
                 var temp = currentPointer.Next;
                 currentPointer.Next = newElement;
                 newElement.Next = temp;
+
+                (currentPointer.Next.Data, currentPointer.Data) = (currentPointer.Data, currentPointer.Next.Data);
                 return;
             }
-            Add(data);
+            currentPointer = newElement;
             return;
         }
 
         public bool Find(string key)
         {
-            if (key == null) throw new Exception("Tried to compare null and not null"); // IS THIS A PROBLEM??
             var found = false;
             var currentPointer = _startingElement;
             while (currentPointer.Next != null)
@@ -79,39 +83,41 @@ namespace taskFour
 
         public void Remove(string key)
         {
-            if (!Find(key) || _startingElement == null) throw new Exception("No such element in a LinkedList instance!");
+            if (_startingElement == null) return;
             var currentPointer = _startingElement;
+            if (currentPointer.Data.HasEqualKeyTo(key))
+            {
+                _startingElement = currentPointer.Next;
+                return;
+            }
             while (currentPointer.Next != null)
             {
                 if (currentPointer.Next.Data.HasEqualKeyTo(key))
                 {
                     currentPointer.Next = currentPointer.Next.Next;
+                    return;
                 }
+                currentPointer.Next = currentPointer;
             }
         }
 
         public List<Movie> Show()
         {
             var elements = new List<Movie>();
+            if (_startingElement.Next == null) 
+            {
+                elements.Add(_startingElement.Data);
+                return elements;
+            } 
             var currentPointer = _startingElement;
             while (currentPointer.Next != null)
             {
                 elements.Add(currentPointer.Data);
+                currentPointer = currentPointer.Next;
             }
+            elements.Add(currentPointer.Data); // for the last one
 
             return elements;
         }
-
-        /*private void RunByList(Action<Movie> action)
-        {
-            var currentPointer = _startingElement;
-            while (currentPointer.Next != null)
-            {
-                action(currentPointer);
-                currentPointer = currentPointer.Next;
-            }
-        }
-
-        private delegate void Action<Movie>(LinkedList.Element<Movie> parameter);*/
     }
 }
