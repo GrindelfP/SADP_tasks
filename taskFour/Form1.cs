@@ -54,7 +54,7 @@ namespace taskFour
 
         private void SortedAdd_Click(object sender, EventArgs e)
         {
-            linkedList.AddToSorted(movie);
+            linkedList.SortedAdd(movie);
         }
 
         private void Find_Click(object sender, EventArgs e)

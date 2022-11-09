@@ -37,7 +37,7 @@ namespace taskFour
             _startingElement = newElementWithNext;
         }
 
-        public void AddToSorted(Movie data)
+        public void SortedAdd(Movie data)
         {
             if (_startingElement == null)
             {
