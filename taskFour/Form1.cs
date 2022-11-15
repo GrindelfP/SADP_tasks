@@ -45,7 +45,8 @@ namespace taskFour
 
         private void Find_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(linkedList.Find(searchRemoveKey.Text).ToString());
+            string isFound = linkedList.Find(searchRemoveKey.Text) ? "Найдено" : "Не найдено";
+            MessageBox.Show(isFound);
         }
 
         private void Remove_Click(object sender, EventArgs e)

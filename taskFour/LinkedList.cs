@@ -65,18 +65,18 @@ namespace taskFour
 
         public bool Find(string key)
         {
-            var found = false;
+            if (_startingElement == null) return false;
             var currentPointer = _startingElement;
-            while (currentPointer.Next != null)
+            while (currentPointer != null)
             {
                 if (currentPointer.Data.HasEqualKeyTo(key))
                 {
-                    found = true;
-                    break;
+                    return true;
                 }
+                currentPointer = currentPointer.Next;
             }
 
-            return found;
+            return false;
         }
 
         public void Remove(string key) // doesn't work properly with single element
