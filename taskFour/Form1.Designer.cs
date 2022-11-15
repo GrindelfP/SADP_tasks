@@ -35,7 +35,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.CreateMovie = new System.Windows.Forms.Button();
             this.listPresentation = new System.Windows.Forms.ListBox();
-            this.Visualize = new System.Windows.Forms.Button();
             this.AddToBeginning = new System.Windows.Forms.Button();
             this.Append = new System.Windows.Forms.Button();
             this.SortedAdd = new System.Windows.Forms.Button();
@@ -96,7 +95,7 @@
             this.movieHasOscars.Name = "movieHasOscars";
             this.movieHasOscars.Size = new System.Drawing.Size(121, 24);
             this.movieHasOscars.TabIndex = 3;
-            this.movieHasOscars.Text = "Выберите:";
+            this.movieHasOscars.Text = "НЕТ";
             // 
             // label2
             // 
@@ -125,16 +124,6 @@
             this.listPresentation.Name = "listPresentation";
             this.listPresentation.Size = new System.Drawing.Size(502, 292);
             this.listPresentation.TabIndex = 6;
-            // 
-            // Visualize
-            // 
-            this.Visualize.Location = new System.Drawing.Point(566, 322);
-            this.Visualize.Name = "Visualize";
-            this.Visualize.Size = new System.Drawing.Size(208, 23);
-            this.Visualize.TabIndex = 7;
-            this.Visualize.Text = "Визуализировать";
-            this.Visualize.UseVisualStyleBackColor = true;
-            this.Visualize.Click += new System.EventHandler(this.Visualize_Click);
             // 
             // AddToBeginning
             // 
@@ -215,7 +204,6 @@
             this.Controls.Add(this.SortedAdd);
             this.Controls.Add(this.Append);
             this.Controls.Add(this.AddToBeginning);
-            this.Controls.Add(this.Visualize);
             this.Controls.Add(this.listPresentation);
             this.Controls.Add(this.CreateMovie);
             this.Controls.Add(this.label2);
@@ -240,7 +228,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button CreateMovie;
         private System.Windows.Forms.ListBox listPresentation;
-        private System.Windows.Forms.Button Visualize;
         private System.Windows.Forms.Button AddToBeginning;
         private System.Windows.Forms.Button Append;
         private System.Windows.Forms.Button SortedAdd;

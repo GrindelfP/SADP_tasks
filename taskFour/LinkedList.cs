@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace taskFour
 {
@@ -47,7 +46,7 @@ namespace taskFour
             var newElement = new Element<Movie>(data);
             var currentPointer = _startingElement;
 
-            while (currentPointer.Next != null)
+            while (currentPointer != null)
             {
                 if (currentPointer.Data.Duration < newElement.Data.Duration)
                 {
@@ -61,7 +60,6 @@ namespace taskFour
                 (currentPointer.Next.Data, currentPointer.Data) = (currentPointer.Data, currentPointer.Next.Data);
                 return;
             }
-            currentPointer = newElement;
             return;
         }
 
@@ -81,7 +79,7 @@ namespace taskFour
             return found;
         }
 
-        public void Remove(string key)
+        public void Remove(string key) // doesn't work properly with single element
         {
             if (_startingElement == null) return;
             var currentPointer = _startingElement;
