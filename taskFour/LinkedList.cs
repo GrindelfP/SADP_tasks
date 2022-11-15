@@ -13,13 +13,13 @@ namespace taskFour
 
         public void Add(Movie data)
         {
-            var newElement = new Element<Movie>(data);
+            Element<Movie> newElement = new Element<Movie>(data);
             if (_startingElement == null)
             {
                 _startingElement = newElement;
                 return;
             }
-            var currentPointer = _startingElement;
+            Element<Movie> currentPointer = _startingElement;
             while (currentPointer.Next != null) currentPointer = currentPointer.Next;
             currentPointer.Next = newElement;
         }
@@ -28,24 +28,23 @@ namespace taskFour
         {
             if (_startingElement == null)
             {
-                var newElement = new Element<Movie>(data);
+                Element<Movie> newElement = new Element<Movie>(data);
                 _startingElement = newElement;
                 return;
             }
-            var newElementWithNext = new Element<Movie>(data, _startingElement);
+            Element<Movie> newElementWithNext = new Element<Movie>(data, _startingElement);
             _startingElement = newElementWithNext;
         }
 
         public void SortedAdd(Movie data)
         {
+            Element<Movie> newElement = new Element<Movie>(data);
             if (_startingElement == null)
             {
-                AddToBeggining(data);
+                _startingElement = newElement;
                 return;
             }
-            var newElement = new Element<Movie>(data);
-            var currentPointer = _startingElement;
-
+            Element<Movie> currentPointer = _startingElement;
             while (currentPointer != null)
             {
                 if (currentPointer.Data.Duration < newElement.Data.Duration)
@@ -53,37 +52,31 @@ namespace taskFour
                     currentPointer = currentPointer.Next;
                     continue;
                 }
-                var temp = currentPointer.Next;
+                Element<Movie> temp = currentPointer.Next;
                 currentPointer.Next = newElement;
                 newElement.Next = temp;
 
                 (currentPointer.Next.Data, currentPointer.Data) = (currentPointer.Data, currentPointer.Next.Data);
                 return;
             }
-            return;
         }
 
         public bool Find(string key)
         {
-            if (_startingElement == null) return false;
             var currentPointer = _startingElement;
             while (currentPointer != null)
             {
-                if (currentPointer.Data.HasEqualKeyTo(key))
-                {
-                    return true;
-                }
+                if (currentPointer.Data.HasEqualKeyTo(key)) return true;
                 currentPointer = currentPointer.Next;
             }
-
             return false;
         }
 
         public void Remove(string key) // doesn't work properly with single element
         {
             if (_startingElement == null) return;
-            var currentPointer = _startingElement;
-            if (currentPointer.Data.HasEqualKeyTo(key))
+            Element<Movie> currentPointer = _startingElement;
+            if (currentPointer.Data.HasEqualKeyTo(key)) // for the first
             {
                 _startingElement = currentPointer.Next;
                 return;
@@ -95,26 +88,19 @@ namespace taskFour
                     currentPointer.Next = currentPointer.Next.Next;
                     return;
                 }
-                currentPointer.Next = currentPointer;
+                currentPointer = currentPointer.Next;
             }
         }
 
         public List<Movie> Show()
         {
-            var elements = new List<Movie>();
-            if (_startingElement.Next == null) 
-            {
-                elements.Add(_startingElement.Data);
-                return elements;
-            } 
-            var currentPointer = _startingElement;
-            while (currentPointer.Next != null)
+            List<Movie> elements = new List<Movie>();
+            Element<Movie> currentPointer = _startingElement;
+            while (currentPointer != null)
             {
                 elements.Add(currentPointer.Data);
                 currentPointer = currentPointer.Next;
             }
-            elements.Add(currentPointer.Data); // for the last one
-
             return elements;
         }
     }

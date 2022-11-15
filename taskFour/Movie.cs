@@ -17,7 +17,7 @@
 
         public override string ToString()
         {
-            var oscars = HasOscars ? "есть 'Оскары'" : "нет 'Оскаров'";
+            string oscars = HasOscars ? "есть 'Оскары'" : "нет 'Оскаров'";
             return $"Название: '{Name}', Длится {Duration} минут, {oscars}";
         }
     }

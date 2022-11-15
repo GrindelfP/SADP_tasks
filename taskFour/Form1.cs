@@ -13,11 +13,6 @@ namespace taskFour
             InitializeComponent();
         }
 
-        private void movieName_Click(object sender, EventArgs e)
-        {
-            movieName.Text = "";
-        }
-
         private void CreateMovie_Click(object sender, EventArgs e)
         {
             movie = new Movie(movieName.Text, 

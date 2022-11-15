@@ -52,7 +52,6 @@
             this.movieName.Size = new System.Drawing.Size(210, 22);
             this.movieName.TabIndex = 0;
             this.movieName.Text = "Название фильма";
-            this.movieName.Click += new System.EventHandler(this.movieName_Click);
             // 
             // movieDuration
             // 
