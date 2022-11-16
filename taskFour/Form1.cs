@@ -40,7 +40,8 @@ namespace taskFour
 
         private void Find_Click(object sender, EventArgs e)
         {
-            string isFound = linkedList.Find(searchRemoveKey.Text) ? "Найдено" : "Не найдено";
+            Movie? foundMovie = linkedList.Find(searchRemoveKey.Text);
+            string isFound = foundMovie != null ? foundMovie.ToString() : "Не найдено";
             MessageBox.Show(isFound);
         }
 
@@ -53,7 +54,7 @@ namespace taskFour
         private void VisualizeList()
         {
             listPresentation.Items.Clear();
-            foreach (var item in linkedList.Show())
+            foreach (Movie item in linkedList.Show())
             {
                 listPresentation.Items.Add(item);
             }

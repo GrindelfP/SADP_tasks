@@ -45,34 +45,39 @@ namespace taskFour
                 return;
             }
             Element<Movie> currentPointer = _startingElement;
+            Element<Movie> previousPointer = _startingElement;
             while (currentPointer != null)
             {
-                if (currentPointer.Data.Duration < newElement.Data.Duration)
+                if (currentPointer.Data.Duration < newElement.Data.Duration) 
                 {
+                    previousPointer = currentPointer;
                     currentPointer = currentPointer.Next;
-                    continue;
-                }
-                Element<Movie> temp = currentPointer.Next;
-                currentPointer.Next = newElement;
-                newElement.Next = temp;
+                } 
+                else
+                {
+                    Element<Movie> tmp = currentPointer.Next;
+                    currentPointer.Next = newElement;
+                    currentPointer.Next.Next = tmp;
+                    (currentPointer.Data, currentPointer.Next.Data) = (currentPointer.Next.Data, currentPointer.Data);
+                    return;
 
-                (currentPointer.Next.Data, currentPointer.Data) = (currentPointer.Data, currentPointer.Next.Data);
-                return;
+                }
             }
+            previousPointer.Next = newElement; // append
         }
 
-        public bool Find(string key)
+        public Movie? Find(string key)
         {
-            var currentPointer = _startingElement;
+            Element<Movie> currentPointer = _startingElement;
             while (currentPointer != null)
             {
-                if (currentPointer.Data.HasEqualKeyTo(key)) return true;
+                if (currentPointer.Data.HasEqualKeyTo(key)) return currentPointer.Data;
                 currentPointer = currentPointer.Next;
             }
-            return false;
+            return null;
         }
 
-        public void Remove(string key) // doesn't work properly with single element
+        public void Remove(string key)
         {
             if (_startingElement == null) return;
             Element<Movie> currentPointer = _startingElement;
