@@ -7,13 +7,13 @@
             public T Data { get; set; }
             public Element<T> Next { get; set; }
 
-            public Element(T data)
+            protected Element(T data)
             {
                 Data = data;
                 Next = null;
             }
 
-            public Element(T data, Element<T> next)
+            protected Element(T data, Element<T> next)
             {
                 Data = data;
                 Next = next;

@@ -4,14 +4,14 @@ namespace taskFour
 {
     public partial class LinkedList
     {
-        private Element<Movie> _startingElement;
+        private Element<Movie> _startingElement; // start point of the list
 
-        public LinkedList()
+        public LinkedList() // default constructor
         {
             _startingElement = null;
         }
 
-        public void Add(Movie data)
+        public void Append(Movie data) // adds element to the end
         {
             Element<Movie> newElement = new Element<Movie>(data);
             if (_startingElement == null)
@@ -24,7 +24,7 @@ namespace taskFour
             currentPointer.Next = newElement;
         }
 
-        public void AddToBeggining(Movie data)
+        public void AddToBeggining(Movie data) // adds element to the beggining
         {
             if (_startingElement == null)
             {
@@ -36,12 +36,12 @@ namespace taskFour
             _startingElement = newElementWithNext;
         }
 
-        public void SortedAdd(Movie data)
+        public void SortedAdd(Movie data) // adds element to a sorted list without disturbing it's order
         {
             Element<Movie> newElement = new Element<Movie>(data);
-            if (_startingElement == null)
+            if (_startingElement == null) // if is empty
             {
-                _startingElement = newElement;
+                _startingElement = newElement; // adds to begginig
                 return;
             }
             Element<Movie> currentPointer = _startingElement;
@@ -53,20 +53,19 @@ namespace taskFour
                     previousPointer = currentPointer;
                     currentPointer = currentPointer.Next;
                 } 
-                else
+                else // adds in the middle
                 {
-                    Element<Movie> tmp = currentPointer.Next;
+                    newElement.Next = currentPointer.Next;
+                    (currentPointer.Data, newElement.Data) = (newElement.Data, currentPointer.Data);
                     currentPointer.Next = newElement;
-                    currentPointer.Next.Next = tmp;
-                    (currentPointer.Data, currentPointer.Next.Data) = (currentPointer.Next.Data, currentPointer.Data);
                     return;
 
                 }
             }
-            previousPointer.Next = newElement; // append
+            previousPointer.Next = newElement; // appends
         }
 
-        public Movie? Find(string key)
+        public Movie? Find(string key) // finds and returns occurences simmilar to the key
         {
             Element<Movie> currentPointer = _startingElement;
             while (currentPointer != null)
@@ -77,7 +76,7 @@ namespace taskFour
             return null;
         }
 
-        public void Remove(string key)
+        public void Remove(string key) // removes an occurance simmilar to the key
         {
             if (_startingElement == null) return;
             Element<Movie> currentPointer = _startingElement;
@@ -97,7 +96,7 @@ namespace taskFour
             }
         }
 
-        public List<Movie> Show()
+        public List<Movie> Show() // shows current state of the list
         {
             List<Movie> elements = new List<Movie>();
             Element<Movie> currentPointer = _startingElement;

@@ -28,7 +28,7 @@ namespace taskFour
 
         private void Append_Click(object sender, EventArgs e)
         {
-            linkedList.Add(movie);
+            linkedList.Append(movie);
             VisualizeList();
         }
 
