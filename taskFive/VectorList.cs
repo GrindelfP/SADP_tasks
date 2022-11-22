@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 
 namespace taskFive
 {
@@ -25,9 +24,9 @@ namespace taskFive
                 Count++;
                 return true;
             }
-            for (int i = Count; i >= 0; i--)
+            for (int i = Count; i > 0; i--)
             {
-                _vector[i + 1] = _vector[i];
+                _vector[i] = _vector[i - 1];
             }
             _vector[0] = data;
             Count++;
