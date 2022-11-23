@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Windows.Forms;
 
 namespace taskSix
 {
@@ -11,7 +13,7 @@ namespace taskSix
             _root = null;
         }
 
-        public bool Add(Movie data)
+        public bool Add(Movie data) // works
         {
             Node<Movie> newNode = new Node<Movie>(data);
             if (_root == null)
@@ -22,7 +24,8 @@ namespace taskSix
             Node<Movie> currentNode = _root;
             while (currentNode != null)
             {
-                if (currentNode.Data.Duration < newNode.Data.Duration)
+                if (currentNode.Data.Duration == newNode.Data.Duration) break;
+                if (currentNode.Data.Duration > newNode.Data.Duration)
                 {
                     if (currentNode.Left == null)
                     {
@@ -34,7 +37,7 @@ namespace taskSix
                         currentNode = currentNode.Left;
                         continue;
                     }
-                    //return true; // do we need it?
+                    return true; // do we need it?
                 }
                 else
                 {
@@ -48,13 +51,44 @@ namespace taskSix
                         currentNode = currentNode.Right;
                         continue;
                     }
-                    //return true; // do we need it?
+                    return true; // do we need it?
                 }
             }
             return false;
         }
 
-        public List<object> Find(int key)
+        public Movie Find(int key)
+        {
+            List<object> found = InternalSearch(key);
+            if (found == null) return null;
+            Node<Movie> data = found[0] as Node<Movie>;
+            return data.Data;
+        }
+        public bool Remove(int key)
+        {
+            bool rootPositioned = false;
+            List<object> removableAndPrevious = InternalSearch(key);
+            Node<Movie> removable = removableAndPrevious[0] as Node<Movie>;
+            List<object> previousAndInfo = removableAndPrevious[1] as List<object>;
+            Node<Movie> previous = previousAndInfo[0] as Node<Movie>;
+            bool isLeft = previousAndInfo[1] as string == "yes";
+            if (removable == null) return false;
+            if (removable == _root) rootPositioned = true;
+            // for leaf type of the node
+            if (removable.Type == NodeType.LEAF) return LeafRemove(rootPositioned, isLeft, previous); ;
+            // for unary inode type of the node
+            if (removable.Type == NodeType.UNARY_INODE) return UnaryInodeRemove(isLeft, previous, removable);
+            // for binary inode type of the node
+            return BinaryInodeRemove(isLeft, previous, removable);
+        }
+
+        public void Visualize(ListBox listBox)  // works
+        {
+            listBox.Items.Clear();
+            Show(listBox, 1, _root, "");
+        }
+        
+        private List<object> InternalSearch(int key)
         {
             if (_root == null) return null;
             Node<Movie> currentNode = _root;
@@ -80,22 +114,17 @@ namespace taskSix
             return null;
         }
 
-        public bool Remove(int key)
+        private void Show(ListBox listBox, int numberOfLevel, Node<Movie> currentNode, string space) // works
         {
-            bool rootPositioned = false;
-            List<object> removableAndPrevious = Find(key);
-            Node<Movie> removable = removableAndPrevious[0] as Node<Movie>;
-            List<object> previousAndInfo = removableAndPrevious[1] as List<object>;
-            Node<Movie> previous = previousAndInfo[0] as Node<Movie>;
-            bool isLeft = previousAndInfo[1] as string == "yes" ? true : false;
-            if (removable == null) return false;
-            if (removable == _root) rootPositioned = true;
-            // for leaf type of the node
-            if (removable.Type == NodeType.LEAF) return LeafRemove(rootPositioned, isLeft, previous); ;
-            // for unary inode type of the node
-            if (removable.Type == NodeType.UNARY_INODE) return UnaryInodeRemove(isLeft, previous, removable);
-            // for binary inode type of the node
-            return BinaryInodeRemove(isLeft, previous, removable);
+            if (_root == null) return;
+            string visualization = space;
+            visualization += numberOfLevel.ToString() + " " + currentNode.Data.ToString();
+            listBox.Items.Add(visualization);
+            //bool noLeft = false;
+            //if (currentNode.Left == null) noLeft = true;
+            if (currentNode.Left != null) Show(listBox, numberOfLevel + 1, currentNode.Left, " <-");
+            //if (currentNode.Right == null) return;
+            if (currentNode.Right != null) Show(listBox, numberOfLevel + 1, currentNode.Right, " ->");
         }
 
         private bool LeafRemove(bool rootPositioned, bool isLeft, Node<Movie> previous)
@@ -115,8 +144,7 @@ namespace taskSix
 
         private bool BinaryInodeRemove(bool isLeft, Node<Movie> previous, Node<Movie> removable)
         {
-            
-            return true;
+            throw new NotImplementedException();
         }
     }
 }
