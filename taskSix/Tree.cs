@@ -78,7 +78,7 @@ namespace taskSix
             if (_root == null) return false;
             Node<Movie> removable = null;
             Node<Movie> previous = null;
-            
+
             // search for the removable element
             bool isLeft = false;
             bool rootPositioned = false;
@@ -86,25 +86,25 @@ namespace taskSix
             {
                 removable = _root;
                 rootPositioned = true;
-            } 
+            }
             else // root does not fit
             {
                 Node<Movie> currentNode = _root;
                 while (currentNode.Left != null || currentNode.Right != null)
                 {
-                    if (currentNode.Left != null && currentNode.Left.Data.Duration == key) 
+                    if (currentNode.Left != null && currentNode.Left.Data.Duration == key)
                     {
                         isLeft = true;
                         removable = currentNode.Left;
                         previous = currentNode;
                         break;
-                    } 
-                    if (currentNode.Right != null && currentNode.Right.Data.Duration == key) 
+                    }
+                    if (currentNode.Right != null && currentNode.Right.Data.Duration == key)
                     {
                         removable = currentNode.Right;
                         previous = currentNode;
                         break;
-                    } 
+                    }
                     if (currentNode.Data.Duration > key)
                     {
                         if (currentNode.Left == null) break;
@@ -119,9 +119,9 @@ namespace taskSix
                     }
                 }
             }
-            
+
             // processing the removable element
-            if (removable == null) return false;           
+            if (removable == null) return false;
             if (removable.Type == NodeType.LEAF) return LeafRemove(rootPositioned, previous, isLeft);
             if (removable.Type == NodeType.UNARY_INODE) return UnaryInodeRemove(rootPositioned, isLeft, previous, removable);
             return BinaryInodeRemove(rootPositioned, isLeft, previous, removable);
@@ -132,7 +132,7 @@ namespace taskSix
             listBox.Items.Clear();
             Show(listBox, 1, _root, "");
         }
-        
+
 
         private void Show(ListBox listBox, int numberOfLevel, Node<Movie> currentNode, string space) // works
         {
@@ -159,7 +159,7 @@ namespace taskSix
         {
             if (rootPositioned)
             {
-               _root = removable.Next();
+                _root = removable.Next();
             }
             else
             {
@@ -182,12 +182,12 @@ namespace taskSix
             }
             else
             {
-                
+
                 if (isLeft) previous.Left = tempor;
                 else previous.Right = tempor;
             }
-            
-            
+
+
             return true;
         }
     }
