@@ -72,6 +72,7 @@ namespace taskFive
             if (Count == 0) return null;
             foreach (Movie item in _vector)
             {
+                if (item == null) return null;
                 if (item.Name == key) return item;
             }
             return null;
@@ -81,14 +82,17 @@ namespace taskFive
         {
             if (Count == 0) return false;
             int indexOfBreak = 0;
+            bool found = false;
             for (int i = 0; i < Count; i++)
             {
                 if (_vector[i].Name == key)
                 {
+                    found = true;
                     indexOfBreak = i;
                     break;
                 }
             }
+            if (!found) return false;
             for (int i = indexOfBreak; i < Count; i++)
             {
                 if (i == Count - 1) _vector[i] = null;
