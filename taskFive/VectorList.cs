@@ -28,16 +28,14 @@ namespace taskFive
             {
                 _vector[i] = _vector[i - 1];
             }
-            _vector[0] = data;
-            Count++;
+            _vector[Count++] = data;
             return true;
         }
 
         public bool Append(Movie data)
         {
             if (Count >= Size) return false;
-            _vector[Count] = data;
-            Count++;
+            _vector[Count++] = data;
             return true;
         }
 
