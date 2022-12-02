@@ -8,71 +8,82 @@ namespace taskSix
 
         public Tree() { _root = null; }
 
-        public bool Add(Movie data) // works
+        /// <summary>
+        /// <para>This method adds an elenent to an ordered binary tree without breaking its order.
+        /// Especially this implementation of the method is working with elements of the tree of type Movie
+        /// and adds it to the tree sorting it by duration, and if duration is simmilar, by name.
+        /// If you try to add movie of a simmilar name and duration it won't do anything, because
+        /// there is no more comparable information in a Movie type and the tree does accept only unique element.</para>
+        /// </summary>
+        public bool Add(Movie data)
         {
+            bool isAdded = false;
             Node<Movie> newNode = new Node<Movie>(data);
             if (_root == null)
             {
                 _root = newNode;
-                return true;
+                isAdded = true;
             }
-            Node<Movie> currentNode = _root;
-            while (currentNode != null)
+            else
             {
-                if (currentNode.Data.Duration == newNode.Data.Duration) break;
-                if (currentNode.Data.Duration > newNode.Data.Duration)
+                Node<Movie> currentNode = _root;
+                while (currentNode != null && currentNode.Data != newNode.Data)
                 {
-                    if (currentNode.Left == null)
+                    if (currentNode.Data > newNode.Data)
                     {
-                        currentNode.Left = newNode;
-                        return true;
+                        var processingNode = currentNode.Left;
+                        isAdded = AddToSubtree(ref processingNode, newNode);
+                        if (isAdded) { currentNode.Left = processingNode; break; }
+                        else currentNode = currentNode.Left; continue;
                     }
-                    if (currentNode.Left != null)
+                    else
                     {
+                        var processingNode = currentNode.Right;
+                        isAdded = AddToSubtree(ref processingNode, newNode);
+                        if (isAdded) { currentNode.Right = processingNode; break; }
+                        else currentNode = currentNode.Right; continue;
+                    }
+                }
+            }
+
+            return isAdded;
+        }
+
+        /// <summary>
+        /// <para>This method finds occurances of a movie with duration equal to the key passed as a parameter,
+        /// and returns found occurance or null if there is no such movie in the tree.</para>
+        /// </summary>
+        public Movie Find(int key)
+        {
+            Movie foudData = null;
+            if (_root != null)
+            {
+                Node<Movie> currentNode = _root;
+                while (currentNode != null && currentNode.Data.Duration == key)
+                {
+                    if (currentNode.Data.Duration > key)
+                    {
+                        if (currentNode.Left == null) return null;
                         currentNode = currentNode.Left;
                         continue;
                     }
-                }
-                else
-                {
-                    if (currentNode.Right == null)
+                    if (currentNode.Data.Duration < key)
                     {
-                        currentNode.Right = newNode;
-                        return true;
-                    }
-                    if (currentNode.Right != null)
-                    {
+                        if (currentNode.Right == null) return null;
                         currentNode = currentNode.Right;
                         continue;
                     }
                 }
+                if (currentNode.Data.Duration == key) foudData = currentNode.Data;
             }
-            return false;
+
+            return foudData;
         }
 
-        public Movie Find(int key)
-        {
-            if (_root == null) return null;
-            Node<Movie> currentNode = _root;
-            while (currentNode != null)
-            {
-                if (currentNode.Data.Duration == key) return currentNode.Data;
-                if (currentNode.Data.Duration > key)
-                {
-                    if (currentNode.Left == null) return null;
-                    currentNode = currentNode.Left;
-                    continue;
-                }
-                if (currentNode.Data.Duration < key)
-                {
-                    if (currentNode.Right == null) return null;
-                    currentNode = currentNode.Right;
-                    continue;
-                }
-            }
-            return null;
-        }
-
+        /// <summary>
+        /// <para>This method removes an occurance of a movie from the tree with duration equal to the key passed
+        /// as a parameter, and returns true if the deletion was succesful and false if not.</para>
+        /// </summary>
         public bool Remove(int key)
         {
             if (_root == null) return false;
@@ -133,7 +144,6 @@ namespace taskSix
             Show(listBox, 1, _root, "");
         }
 
-
         private void Show(ListBox listBox, int numberOfLevel, Node<Movie> currentNode, string space) // works
         {
             if (_root == null) return;
@@ -142,6 +152,17 @@ namespace taskSix
             listBox.Items.Add(visualization);
             if (currentNode.Left != null) Show(listBox, numberOfLevel + 1, currentNode.Left, " <-");
             if (currentNode.Right != null) Show(listBox, numberOfLevel + 1, currentNode.Right, " ->");
+        }
+
+        private bool AddToSubtree(ref Node<Movie> subtreeTop, Node<Movie> newNode)
+        {
+            bool added = false;
+            if (subtreeTop == null)
+            {
+                subtreeTop = newNode;
+                added = true;
+            }
+            return added;
         }
 
         private bool LeafRemove(bool rootPositioned, Node<Movie> previous, bool isLeft) // works
@@ -186,7 +207,6 @@ namespace taskSix
                 if (isLeft) previous.Left = tempor;
                 else previous.Right = tempor;
             }
-
 
             return true;
         }
